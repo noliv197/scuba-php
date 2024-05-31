@@ -10,7 +10,7 @@
 ![]()
 
 ## About The Project
-<img src="http://img.shields.io/static/v1?label=Development&message=On&Going&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=Development&message=On%Going&color=blue&style=for-the-badge"/>
 <img src="http://img.shields.io/static/v1?label=CODE%20REVIEW&message=Not%20Started&color=red&style=for-the-badge"/>
 
 * 7 Days Of Code Challenge
@@ -30,4 +30,3 @@
   - Day 7: 
   
 - Observations:
-- 
