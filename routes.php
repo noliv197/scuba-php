@@ -1,6 +1,4 @@
 <?php
-    include 'controller.php';
-    
     switch($_SERVER["REQUEST_METHOD"]){
         case "GET":
             if (key_exists('page',$_GET)){
@@ -24,11 +22,14 @@
             if (key_exists('person',$_POST)){
                 $person = $_POST['person'];
                 $user = [
-                    "nome" => $person["name"],
+                    "name" => $person["name"],
                     "email" => $person["email"],
-                    "senha" => $person["password"]
+                    "password" => $person["password"],
+                    "confirm" => $person["password-confirm"],
                 ];
                 register($user);
+            } else {
+                http_response_code(400);
             }
         break;
 

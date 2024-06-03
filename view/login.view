@@ -12,7 +12,7 @@
     <h1>Scuba<span>PHP</span></h1>
     <form action="/?page=login&from=login" method="POST">
         <div class="mensagem-sucesso">
-            <p>Mensagem de Sucesso</p>
+            <p id="success-message">Mensagem de Sucesso</p>
         </div>
         <label for="login">Email</label>
         <input type="text" name="person[email]" required>

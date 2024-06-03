@@ -21,9 +21,9 @@
   * Improve old code implementation
   
 - Schedule
-  - Day 1: Create view and controller and remove redo router script.
-  - Day 2: 
-  - Day 3: 
+  - Day 1: Create view and controller and redo router script.
+  - Day 2: Implement create user
+  - Day 3: Register form validation
   - Day 4: 
   - Day 5: 
   - Day 6: 
