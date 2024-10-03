@@ -1,6 +1,6 @@
 <?php
 
-    function render_view($template, $messages=[]){
+    function render_view($template, $messages=[], $values=[]){
         $content = file_get_contents(VIEW_FOLDER.$template);
         if (count($messages) > 0){
             foreach ($messages as $message) {
@@ -12,6 +12,12 @@
             }
         }
 
+        if(count($values) > 0){
+            foreach ($values as $value) {
+                $content = replace_value($content, $value);
+            }
+        }
+        
         $content = clear_error_message($content);
         $content = clear_success_message($content);
         echo $content;
@@ -33,6 +39,16 @@
         return str_replace(
             $old_msg,
             $new_msg,
+            $content
+        );
+    }
+
+    function replace_value($content, $value){
+        $old_input = '<input type="'.$value["type"].'" name="person['.$value["name"].']" value="" required>';
+        $new_input = '<input type="'.$value["type"].'" name="person['.$value["name"].']" value="'.$value["value"].'" required>'; 
+        return str_replace(
+            $old_input,
+            $new_input,
             $content
         );
     }

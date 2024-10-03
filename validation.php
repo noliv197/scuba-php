@@ -12,7 +12,7 @@
     }
 
     function verify_pass($pass){
-        if (strlen($pass) >= 10){
+        if (strlen($pass) >= 4){
             return false;
         } else{
             return [
@@ -29,10 +29,17 @@
             file_get_contents($fileAddress)
         );
 
-        $email_exists = array_search($email, array_column($data, 'email'));
+        $email_exists = false;
+        foreach(array_column($data, 'email') as $data_email){
+            if($email == $data_email) {
+                $email_exists = true;
+                break;
+            };
+        }
+
         if (!$email_exists){
             return false;
-        } else{
+        } else {
             return [
                 "type" => "email",
                 "message" => "This email is already registered",

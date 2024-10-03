@@ -4,7 +4,7 @@
             if (key_exists('page',$_GET)){
                 switch($_GET['page']){
                     case 'login':
-                        do_login();
+                        do_login($_GET);
                         break;
                     case 'register':
                         do_register();
