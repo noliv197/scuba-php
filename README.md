@@ -24,7 +24,7 @@
   - Day 1: Create view and controller and redo router script.
   - Day 2: Implement create user
   - Day 3: Register form validation
-  - Day 4: 
+  - Day 4: Set php mailer and encrypt functions to confirm email
   - Day 5: 
   - Day 6: 
   - Day 7: 

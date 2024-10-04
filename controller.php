@@ -1,5 +1,10 @@
 <?php
 
+    function do_not_found(){
+        render_view('not_found.view');
+        http_response_code(404);
+    }
+
     function do_home(){
         render_view('home.view');
         http_response_code(200);
@@ -24,10 +29,11 @@
         render_view('login.view', $messages);
         http_response_code(200);
     }
-    
-    function do_not_found(){
-        render_view('not_found.view');
-        http_response_code(404);
+
+    function do_validation($token){
+        // send_email_validation('test@gmail.com', 'test');
+        $email = substr(ssl_decrypt($token),0,15);
+        user_edit($email, 'mail_validation', true);
     }
 
     function register($user){
@@ -42,22 +48,25 @@
 
 
         if (count($errors) > 0){
-            $values = [
-                [
-                    "type" => "text","name" => 'name',
-                    "value" => $user['name'],
-                ],
-                [
-                    "type" => "email","name" => 'email',
-                    "value" => $user['email'],
-                ]
-            ];
-            render_view('register.view', $errors, $values);
+             render_view('register.view', $errors, [
+                ["type" => "text","name" => 'name',"value" => $user['name'],],
+                ["type" => "email","name" => 'email',"value" => $user['email'],]
+            ]);
         } else {
             $user["mail_validation"] = false;
-            create($user);
+            $user["password"] = password_hash($user["password"],PASSWORD_BCRYPT,["cost"=>10]);
+            unset($user['confirm']);
+            
+            user_create($user);
+            send_email_validation($user['email'], $user['name']);
             http_response_code(201);
-            header("Location: ".$_SERVER["HTTP_ORIGIN"]."?page=login&from=register&register=confirm",true,301);
+            header("Location: ".DOMAIN."?page=login&from=register&register=confirm",true,301);
         }
+    }
+
+    function login($user){
+        // check if email exists
+        // check if mail_validation = true
+        // password_verify($pass,$array['pass'])
     }
 ?>

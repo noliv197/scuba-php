@@ -24,19 +24,8 @@
     }
 
     function verify_email($email){
-        $fileAddress = "./data/users.json";
-        $data = json_decode(
-            file_get_contents($fileAddress)
-        );
 
-        $email_exists = false;
-        foreach(array_column($data, 'email') as $data_email){
-            if($email == $data_email) {
-                $email_exists = true;
-                break;
-            };
-        }
-
+        $email_exists = get_by_email($email);
         if (!$email_exists){
             return false;
         } else {
