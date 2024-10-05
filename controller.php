@@ -17,29 +17,44 @@
     
     function do_login($request){
         $messages = [];
-        if(
-            $request['from'] && $request['from'] === 'register' && 
-            $request['register'] && $request['register'] === 'confirm'
-        ){
-            array_push($messages,[
-                "message" => "Register successfull. Please confirm your email",
-                "error" => false
-            ]);
+        if(isset($request['from']) &&  isset($request['register'])){
+            if($request['from'] === 'register' && $request['register'] === 'sent'){
+                array_push($messages,[
+                    "message" => "Register successfull. Please confirm your email",
+                    "error" => false
+                ]);
+            } else if($request['from'] === 'validation' && $request['register'] === 'confirmed'){
+                array_push($messages,[
+                    "message" => "Email confirmed successfully",
+                    "error" => false
+                ]);
+            } else if($request['from'] === 'validation' && $request['register'] === 'not-confirmed'){
+                array_push($messages,[
+                    "message" => "It was not possible to confirm your email",
+                    "error" => true
+                ]);
+            }
         }
         render_view('login.view', $messages);
         http_response_code(200);
     }
 
     function do_validation($token){
-        // send_email_validation('test@gmail.com', 'test');
         $email = substr(ssl_decrypt($token),0,15);
-        user_edit($email, 'mail_validation', true);
+        if(check_email($email)){
+            user_edit($email, 'mail_validation', true);
+            http_response_code(201);
+            header("Location: ".DOMAIN."?page=login&from=validation&register=confirmed",true,301);
+        } else {
+            http_response_code(403);
+            header("Location: ".DOMAIN."?page=login&from=validation&register=not-confirmed",true,301);
+        }
     }
 
     function register($user){
         $errors = [];
         $pass_error = verify_pass($user['password']);
-        $confirm_error = confirm_pass($user['password'], $user['confirm']);
+        $confirm_error = confirm_pass($user['password'], $user['password-confirm']);
         $email_error = verify_email($user['email']);
 
         $pass_error !== false ? array_push($errors, $pass_error) : null;
@@ -55,18 +70,23 @@
         } else {
             $user["mail_validation"] = false;
             $user["password"] = password_hash($user["password"],PASSWORD_BCRYPT,["cost"=>10]);
-            unset($user['confirm']);
+            unset($user['password-confirm']);
             
             user_create($user);
             send_email_validation($user['email'], $user['name']);
             http_response_code(201);
-            header("Location: ".DOMAIN."?page=login&from=register&register=confirm",true,301);
+            header("Location: ".DOMAIN."?page=login&from=register&register=sent",true,301);
         }
     }
 
     function login($user){
-        // check if email exists
-        // check if mail_validation = true
-        // password_verify($pass,$array['pass'])
+        $auth = authentication($user['email'], $user['password']);
+
+        if($auth === 200){
+            http_response_code(200);
+            header("Location: ".DOMAIN."?page=home&from=login",true,301);
+        } else {
+            render_view('login.view', [$auth]);
+        }
     }
 ?>

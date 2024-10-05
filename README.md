@@ -21,11 +21,11 @@
   * Improve old code implementation
   
 - Schedule
-  - Day 1: Create view and controller and redo router script.
-  - Day 2: Implement create user
-  - Day 3: Register form validation
-  - Day 4: Set php mailer and encrypt functions to confirm email
-  - Day 5: 
+  - Day 1: Create view and controller and redo router script;
+  - Day 2: Implement create user;
+  - Day 3: Register form validation;
+  - Day 4: Set php mailer and encrypt functions to confirm email;
+  - Day 5: Set authentication with session and handle auth routes. Validate confirm token;
   - Day 6: 
   - Day 7: 
   

@@ -1,32 +1,42 @@
 <?php
-    function user_create($user){
-        $fileAddress = "./data/users.json";
-        $data = json_decode(
-            file_get_contents($fileAddress)
+    function get_users(){
+        return json_decode(
+            file_get_contents(DATA_LOCATION)
         );
+    }
 
+    function update_users($data){
+        file_put_contents(
+            DATA_LOCATION, 
+            json_encode($data)
+        );
+    }
+
+    function user_create($user){
+        $data = get_users();
         array_push($data, $user);
-        file_put_contents($fileAddress, json_encode($data));
+        update_users($data);
     }
 
     function user_edit($email, $key, $new_val){
-        $fileAddress = "./data/users.json";
-        $data = json_decode(
-            file_get_contents($fileAddress)
-        );
+        $data = get_users();
 
-        file_put_contents($fileAddress, json_encode($data));
+        foreach($data as $dt){
+            if($email == $dt->email) {
+                $dt->$key = $new_val;
+                break;
+            };
+        }
+
+        update_users($data);
     }
 
-    function get_by_email($email){
-        $fileAddress = "./data/users.json";
-        $data = json_decode(
-            file_get_contents($fileAddress)
-        );
+    function check_email($email, $returnObj=false){
+        $data = get_users();
 
-        foreach(array_column($data, 'email') as $data_email){
+        foreach(array_column($data, 'email') as $idx => $data_email){
             if($email == $data_email) {
-                return true;
+                return ($returnObj ? $data[$idx] : true);
                 break;
             };
         }

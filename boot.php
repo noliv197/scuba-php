@@ -4,6 +4,7 @@ include 'vendor/autoload.php';
 include 'mail.php';
 include 'crud.php';
 include 'view.php';
+include 'auth.php';
 include 'crypt.php';
 include 'controller.php';
 include 'validation.php';
