@@ -31,6 +31,19 @@
         update_users($data);
     }
 
+    function user_delete($user){
+        $data = get_users();
+
+        foreach ($data as $idx => $dt) {
+            if($dt->email == $user->email){
+                unset($data[$idx]);
+                break;
+            }
+        }
+
+        update_users($data);
+    }
+
     function check_email($email, $returnObj=false){
         $data = get_users();
 

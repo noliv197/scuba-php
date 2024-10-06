@@ -26,4 +26,8 @@
     function auth_user(){
         return (key_exists('auth_user', $_SESSION) ? json_decode($_SESSION['auth_user']) : false);
     }
+
+    function auth_logout(){
+        unset($_SESSION['auth_user']);
+    }
 ?>

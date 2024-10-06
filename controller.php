@@ -6,7 +6,19 @@
     }
 
     function do_home(){
-        render_view('home.view');
+        $user = json_decode($_SESSION['auth_user']);
+        render_view('home.view', [], [
+            [
+                'new_value' => $user ->name, 
+                'old_value'=>'{{field_name}}',
+                'str'=> true
+            ],
+            [
+                'new_value' => $user ->email, 
+                'old_value'=>'{{field_email}}',
+                'str'=> true
+            ]
+        ]);
         http_response_code(200);
     }
 
@@ -49,6 +61,18 @@
             http_response_code(403);
             header("Location: ".DOMAIN."?page=login&from=validation&register=not-confirmed",true,301);
         }
+    }
+
+    function do_logout(){
+        auth_logout();
+        http_response_code(201);
+        header("Location: ".DOMAIN."?page=login&from=logout",true,301);
+    }
+
+    function do_delete_account(){
+        $user = json_decode($_SESSION['auth_user']);
+        user_delete($user);
+        do_logout();
     }
 
     function register($user){

@@ -51,6 +51,12 @@
                 case 'home':
                     do_home();
                     break;
+                case 'logout':
+                    do_logout();
+                    break;
+                case 'delete-account':
+                    do_delete_account();
+                    break;
                 default:
                     do_not_found();
                     break;
@@ -60,53 +66,4 @@
         }
     }
 
-    // switch($_SERVER["REQUEST_METHOD"]){
-        // case "GET":
-        //     if (key_exists('page',$_GET)){
-        //         switch($_GET['page']){
-        //             case 'login':
-        //                 do_login($_GET);
-        //                 if (key_exists('person',$_POST)){
-        //                     login($_POST['person']);
-        //                 }
-        //                 break;
-        //             case 'register':
-        //                 do_register();
-        //                 break;
-        //             default:
-        //                 do_not_found();
-        //                 break;
-        //         }
-        //     }
-        //     else {
-        //         do_home();
-        //     }
-        // break;
-    //     case "POST":
-    //         if (key_exists('page',$_GET)){
-    //             switch($_GET['page']){
-    //                 case 'login':
-    //                     if (key_exists('person',$_POST)){
-    //                         login($_POST['person']);
-    //                     }
-    //                     break;
-    //                 case 'register':
-    //                     if (key_exists('person',$_POST)){
-    //                         register($_POST['person']);
-    //                     } else {
-    //                         http_response_code(400);
-    //                     }
-    //                     break;
-    //                 case 'mail-validation':
-    //                     if (key_exists('token',$_GET)){
-    //                         do_validation($_GET['token']);
-    //                     }
-    //                     break;
-    //                 default:
-    //                     http_response_code(404);
-    //                     break;
-    //             }
-    //         }
-    //     break;
-    // }
 ?>

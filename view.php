@@ -15,13 +15,25 @@
 
         if(count($values) > 0){
             foreach ($values as $value) {
-                $content = replace_value($content, $value);
+                if(key_exists('str', $value)){
+                    $content = replace_str($content, $value);
+                } else {
+                    $content = replace_value($content, $value);
+                }
             }
         }
         
         $content = clear_form_message($content);
         $content = clear_main_message($content);
         echo $content;
+    }
+
+    function replace_str($content, $str){
+        return str_replace(
+            $str['old_value'],
+            $str['new_value'],
+            $content
+        );
     }
 
     function replace_form_message($content, $error){

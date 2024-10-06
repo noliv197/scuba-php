@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="mensagem-sucesso">
-        <p>Mensagem de Sucesso</p>
+        <p id="success-message">Mensagem de Sucesso</p>
     </div>
     <h1>Scuba<span>PHP</span></h1>
 
