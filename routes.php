@@ -31,6 +31,30 @@
                         do_validation($_GET['token']);
                     }
                     break;
+                case 'forget-password':
+                    if($_SERVER["REQUEST_METHOD"] === 'POST'){
+                        if (key_exists('person',$_POST)){
+                            forget_password($_POST['person']['email']);
+                        } else {
+                            http_response_code(400);
+                        }
+                    } else {
+                        do_forget_password();
+                    }
+                    break;
+                case 'change-password':
+                    // if (key_exists('token',$_GET)){
+                    //     change_password($_GET['token']);
+                    // } else {
+                    //     http_response_code(400);
+                    // }
+
+                    if($_SERVER["REQUEST_METHOD"] === 'POST'){
+                        change_password($_POST['person']);
+                    } else {
+                        do_change_password($_GET['token']);
+                    }
+                    break;
                 default:
                     http_response_code(404);
                     do_not_found();

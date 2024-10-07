@@ -35,4 +35,18 @@
 
         return false;
     }
+
+    function verify_time($time){
+        $current_timestamp = time();
+        $diff = $current_timestamp - $time;
+
+        if ($diff >= 86400){
+            return [
+                "message" => "Your link has expired",
+                "error" => true
+            ];
+        }
+
+        return false;
+    }
 ?>

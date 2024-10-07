@@ -27,6 +27,6 @@
   - Day 4: Set php mailer and encrypt functions to confirm email;
   - Day 5: Set authentication with session and handle auth routes. Validate confirm token;
   - Day 6: Change home page dynamically, allow delete data and logout
-  - Day 7: 
+  - Day 7: Set change and forget password;
   
 - Observations:

@@ -1,5 +1,6 @@
 <?php
 
+    //GET functions 
     function do_not_found(){
         render_view('not_found.view');
         http_response_code(404);
@@ -22,13 +23,14 @@
         http_response_code(200);
     }
 
-    function do_register(){
-        render_view('register.view');
+    function do_register($messages=[], $values=[]){
+        render_view('register.view', $messages, $values);
         http_response_code(200);
     }
     
     function do_login($request){
         $messages = [];
+
         if(isset($request['from']) &&  isset($request['register'])){
             if($request['from'] === 'register' && $request['register'] === 'sent'){
                 array_push($messages,[
@@ -45,6 +47,13 @@
                     "message" => "It was not possible to confirm your email",
                     "error" => true
                 ]);
+            } 
+        } else if(isset($request['from']) &&  isset($request['status'])){
+            if($request['from'] === 'change-password' && $request['status'] === 'confirmed'){
+                array_push($messages,[
+                    "message" => "Your password was change successfully",
+                    "error" => false
+                ]);
             }
         }
         render_view('login.view', $messages);
@@ -52,7 +61,7 @@
     }
 
     function do_validation($token){
-        $email = substr(ssl_decrypt($token),0,15);
+        $email = substr(ssl_decrypt($token),0, -36);
         if(check_email($email)){
             user_edit($email, 'mail_validation', true);
             http_response_code(201);
@@ -61,6 +70,18 @@
             http_response_code(403);
             header("Location: ".DOMAIN."?page=login&from=validation&register=not-confirmed",true,301);
         }
+    }
+
+    function do_forget_password($message=[]){
+        render_view('forget_password.view',$message);
+        http_response_code(200);
+    }
+
+    function do_change_password($token, $errors=[]){
+        render_view('change_password.view',$errors,[
+            ["type" => "hidden","name" => 'token',"value" => $token],
+        ]);
+        http_response_code(200);
     }
 
     function do_logout(){
@@ -75,6 +96,7 @@
         do_logout();
     }
 
+    // POST functions
     function register($user){
         $errors = [];
         $pass_error = verify_pass($user['password']);
@@ -87,7 +109,7 @@
 
 
         if (count($errors) > 0){
-             render_view('register.view', $errors, [
+            do_register($errors,[
                 ["type" => "text","name" => 'name',"value" => $user['name'],],
                 ["type" => "email","name" => 'email',"value" => $user['email'],]
             ]);
@@ -112,5 +134,49 @@
         } else {
             render_view('login.view', [$auth]);
         }
+    }
+
+    function forget_password($email){
+        if (check_email($email)){
+            send_forget_password($email);
+            do_forget_password([
+                [
+                    "message" => "Please check your inbox to proceed.",
+                    "error" => false
+                ]
+            ]);
+        } else {
+            do_forget_password([
+                [
+                    "message" => "It was not possible to confirm your email.",
+                    "error" => true
+                ]
+            ]);
+        }
+    }
+
+    function change_password($form){
+        $decrypt_token = ssl_decrypt($form['token']);
+        $email = preg_split('/time=/', $decrypt_token)[0];
+        $time = preg_split('/time=/', $decrypt_token)[1];
+
+        $errors = [];
+        $pass_error = verify_pass($form['password']);
+        $confirm_error = confirm_pass($form['password'], $form['password-confirm']);
+        $time_error = verify_time($time);
+
+        $pass_error !== false ? array_push($errors, $pass_error) : null;
+        $confirm_error !== false ? array_push($errors, $confirm_error) : null;
+        $time_error !== false ? array_push($errors, $time_error) : null;
+        
+        if (count($errors) > 0){
+            do_change_password($form['token'], $errors);
+       } else {
+           $new_password = password_hash($form["password"],PASSWORD_BCRYPT,["cost"=>10]);
+           
+           user_edit($email,'password', $new_password);
+           http_response_code(201);
+           header("Location: ".DOMAIN."?page=login&from=change-password&status=confirmed",true,301);
+       }
     }
 ?>
