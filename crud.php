@@ -41,7 +41,7 @@
             }
         }
 
-        update_users($data);
+        update_users(array_values($data));
     }
 
     function check_email($email, $returnObj=false){
