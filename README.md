@@ -4,13 +4,14 @@
 | -------------  | --- |
 | :sparkles: Name        | **SCUBA-PHP**
 | :label: Build With | php, composer
-| :rocket: URL         | ""
+| :rocket: URL         | 
 | :fire: Challenge     | https://7daysofcode.io/matricula/php
 
-![]()
+<img src="./resource/register.gif"/>
+<img src="./resource/delete.gif" />
 
 ## About The Project
-<img src="http://img.shields.io/static/v1?label=Development&message=On%20Going&color=blue&style=for-the-badge"/>
+<img src="http://img.shields.io/static/v1?label=Development&message=Finished&color=green&style=for-the-badge"/>
 <img src="http://img.shields.io/static/v1?label=CODE%20REVIEW&message=Not%20Started&color=red&style=for-the-badge"/>
 
 * 7 Days Of Code Challenge
@@ -30,3 +31,7 @@
   - Day 7: Set change and forget password;
   
 - Observations:
+ - To run the application execute the command : 
+ ```
+ php -S localhost:4242
+ ```
