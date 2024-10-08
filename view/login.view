@@ -17,12 +17,12 @@
         <label for="login">Email</label>
         <input type="text" name="person[email]" required>
         <span class="mensagem-erro">Mensagem de Erro</span>
-        <label for="password">Senha</label>
+        <label for="password">Passwod</label>
         <input type="password" name="person[password]" required>
         <span class="mensagem-erro">Mensagem de Erro</span>
-        <button>Entrar</button>
-        <a href="./?page=register">Cadastrar Usuário</a>
-        <a href="./?page=forget-password">Esqueci Minha Senha</a>
+        <button>Enter</button>
+        <a href="./?page=register">Register User</a>
+        <a href="./?page=forget-password">Forgot Password?</a>
     </form>
 </body>
 </html>

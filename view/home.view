@@ -21,8 +21,8 @@
         <div class="dados">
             <div class="info-dados">
                 <span class="mensagem-erro">Mensagem de Erro</span>
-                <p>Nome do Usuário:{{field_name}}</p>
-                <p>Email do Usuário:{{field_email}}</p>
+                <p>User Name:{{field_name}}</p>
+                <p>User Email:{{field_email}}</p>
             </div>
             <div class="delete">
                 <a href="./?page=logout&from=home">

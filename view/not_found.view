@@ -10,8 +10,8 @@
 </head>
 <body>
     <a href="./?page=root&from=not_found"><h1>Scuba<span>PHP</span></h1></a>
-   <h2>DEU RUIM!</h2>
-   <h3>PÁGINA NÃO ENCONTRADA</h3>
-   <a href="./?page=root&from=not_found">VOLTAR PARA SUPERFICIE</a>
+   <h2>Something Went Bad!</h2>
+   <h3>Page Not Found</h3>
+   <a href="./?page=root&from=not_found">Go Back To The Surface</a>
 </body>
 </html>
