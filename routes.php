@@ -43,12 +43,6 @@
                     }
                     break;
                 case 'change-password':
-                    // if (key_exists('token',$_GET)){
-                    //     change_password($_GET['token']);
-                    // } else {
-                    //     http_response_code(400);
-                    // }
-
                     if($_SERVER["REQUEST_METHOD"] === 'POST'){
                         change_password($_POST['person']);
                     } else {

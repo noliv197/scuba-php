@@ -15,8 +15,8 @@ function send_email_validation($email, $name){
         ",
     ];
     
-    echo $url;
-    // send_mail($email, $name, $info);
+    // echo $url;
+    send_mail($email, $name, $info);
 }
 
 function send_forget_password($email){
@@ -30,8 +30,8 @@ function send_forget_password($email){
         ",
     ];
     
-    echo $url;
-    // send_mail($email, '', $info);
+    // echo $url;
+    send_mail($email, '', $info);
 }
 
 function send_mail($email, $name, $info){
